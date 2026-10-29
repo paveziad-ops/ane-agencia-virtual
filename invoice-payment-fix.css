@@ -1,0 +1,28 @@
+
+/* Apenas a experiencia de pagamento autenticado em Faturas e Pix. */
+#app .invoice-payment-screen{padding:25px 26px}
+#app .invoice-payment-screen.qp h2{color:#183d62;font-weight:800}
+#app .invoice-payment-screen .qp-panel{min-height:170px}
+#app .invoice-payment-screen .qp-tabs{margin-top:18px}
+#app .invoice-payment-screen .qp-summary{margin-top:17px}
+#app .invoice-pdf-result{
+ margin-top:13px;padding:12px 14px;background:#f5fafe;
+ border:1px solid #d8e9f6;border-radius:10px;
+ display:flex;align-items:center;flex-wrap:wrap;gap:11px;
+ font-size:11px;color:#36638b;line-height:1.5;
+}
+#app .invoice-pdf-result .qp-desc{margin:0}
+#app .invoice-pdf-direct-link{font-size:11px;font-weight:800;color:#166faf;
+ text-decoration:underline;text-underline-offset:2px}
+#app .invoice-pdf-error{color:#a14747;margin:0;font-weight:650;font-size:11px}
+#app .invoice-payment-footer .invoice-pdf-result{margin-top:0}
+@media(max-width:720px){
+ #app .invoice-payment-screen{padding:19px 14px}
+ #app .invoice-payment-screen .qp-summary{grid-template-columns:repeat(2,minmax(0,1fr))}
+ #app .invoice-payment-screen .qp-panel.pix{grid-template-columns:1fr}
+ #app .invoice-payment-screen .qp-qr{margin:0 auto}
+}
+
+#app .invoice-payment-footer .invoice-email-pending{margin-top:9px;opacity:.65;cursor:not-allowed}
+#app .inv-history-table .invoice-pdf-result{max-width:245px;padding:8px 9px;margin-top:8px;display:block;overflow-wrap:anywhere}
+#app .inv-history-table .invoice-pdf-result .invoice-pdf-direct-link{display:block;margin-top:7px}

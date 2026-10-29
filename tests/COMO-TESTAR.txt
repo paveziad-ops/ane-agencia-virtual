@@ -1,0 +1,7 @@
+Teste local sem o VerSan real (Node 18+):
+  1) node tests/mock-versan.js          (VerSan simulado na porta 9090, segue a collection Postman)
+  2) VERSAN_BASE_URL=http://127.0.0.1:9090 VERSAN_APPLICATION_LOGIN=integrador VERSAN_APPLICATION_PASSWORD=senha-int \
+     VERSAN_SECRET=segredo-teste SESSION_SECRET=0123456789abcdef0123456789abcdef-teste node tests/dev-server.js
+  3) Abra http://localhost:8083  — login de teste: CPF 529.982.247-25 / senha 4725 (CPF fictício de teste); CDC 1001 ou 1002
+  4) bash tests/api-test.sh             (35 cenários via curl)
+Para testar e-mail, defina SMTP_HOST/EMAIL_FROM e tenha o pacote nodemailer instalado (npm install).

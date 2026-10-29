@@ -1,0 +1,9 @@
+/* iOS Safari / embedded browser autofill: prevent input-focus autozoom. */
+@media (max-width: 770px){
+  #app .auth-final-page .auth-final-input-row input,
+  #app .auth-wrap input[autocomplete="username"],
+  #app .auth-wrap input[autocomplete="current-password"]{
+    font-size:16px !important;
+    line-height:1.3;
+  }
+}

@@ -1,0 +1,22 @@
+/* Public occurrence introduction, matching the pre-existing OS dialog */
+.av-os-public-intro-overlay{z-index:9910;padding:max(18px,env(safe-area-inset-top,0px)) 18px max(18px,env(safe-area-inset-bottom,0px))}
+.av-os-public-intro-overlay .av-os-intro-dialog{width:min(100%,530px);padding:30px;max-height:calc(100dvh - 36px)}
+.av-os-public-intro-overlay .av-os-top{margin-bottom:16px}
+.av-os-public-intro-overlay .av-os-intro-emblem{width:55px;height:55px;display:grid;place-items:center;margin:0 0 16px;border-radius:16px;background:#e7f3fb;color:#20598d;font-size:34px;font-weight:750}
+.av-os-public-intro-overlay .av-os-intro-dialog h2{margin-bottom:13px}
+.av-os-public-intro-overlay .av-os-lead{margin-bottom:12px}
+.av-os-public-intro-overlay .av-os-intro-no-cdc{display:inline-flex;align-items:center;padding:8px 12px;border-radius:9px;background:#edf7fc;color:#275d86;font-size:12px;font-weight:800;margin:0 0 20px}
+.av-os-public-intro-overlay .av-os-intro-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:stretch;margin:2px 0 0}
+.av-os-public-intro-overlay .av-os-intro-actions button{min-height:60px;width:100%;white-space:normal;line-height:1.35;text-align:center;font:800 13px Ubuntu,Verdana,Tahoma,system-ui,-apple-system,sans-serif;padding:13px 12px;border-radius:12px;cursor:pointer}
+.av-os-public-intro-overlay .av-os-intro-actions .av-os-intro-report{background:#1d4696;color:#fff;border:2px solid #1d4696}
+.av-os-public-intro-overlay .av-os-intro-actions .av-os-intro-report:hover{background:#223367;border-color:#223367}
+.av-os-public-intro-overlay .av-os-intro-dismiss{background:#fff;color:#24547c;border:2px solid #bcd5e7}
+.av-os-public-intro-overlay .av-os-intro-dismiss:hover{background:#f1f7fb}
+.av-os-public-intro-overlay .av-os-intro-actions button:focus-visible{outline:3px solid #72c6e7;outline-offset:3px}
+.av-os-public-intro-overlay .av-os-intro-note{font-size:11px;color:#657f95;line-height:1.55;margin:19px 0 0;border-top:1px solid #e0ebf3;padding-top:14px}
+@media(max-width:600px){
+ .av-os-public-intro-overlay .av-os-intro-dialog{padding:24px 20px}
+ .av-os-public-intro-overlay .av-os-intro-actions{gap:12px}
+ .av-os-public-intro-overlay .av-os-intro-actions button{min-height:64px;font-size:12px;padding:12px 9px}
+}
+

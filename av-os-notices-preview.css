@@ -1,0 +1,52 @@
+
+/* Agência Virtual: prévia de avisos de OS e comunicação pública - scoped */
+.av-os-locked{overflow:hidden}
+.av-os-promo{margin:32px auto 0;max-width:1150px;padding:28px;display:flex;gap:18px;align-items:center;background:white;border:1px solid #dbe7f1;border-radius:22px;box-shadow:0 16px 35px #133f6e12;color:#203c59}
+.av-os-promo-symbol{width:56px;height:56px;border-radius:17px;background:#eaf4fb;display:grid;place-items:center;font-size:27px;flex-shrink:0}
+.av-os-promo-text{flex:1;min-width:0}
+.av-os-promo-text>span{display:block;color:#5489a7;font-size:10px;letter-spacing:.12em;font-weight:800}
+.av-os-promo-text h2{font-size:clamp(18px,2vw,22px);margin:4px 0 6px;line-height:1.25}
+.av-os-promo-text p{margin:0;font-size:13px;line-height:1.55;color:#5c7189}
+.av-os-cta,.av-os-primary{border:0;background:#1d4696;color:white;border-radius:12px;font:800 13px Ubuntu,Verdana,Tahoma,system-ui,sans-serif;padding:14px 17px;cursor:pointer;transition:background .15s}
+.av-os-cta:hover,.av-os-primary:hover{background:#223367}
+.av-os-cta{white-space:nowrap;display:flex;align-items:center;gap:14px;min-height:48px}
+.av-os-overlay{position:fixed;inset:0;z-index:9900;display:flex;align-items:center;justify-content:center;padding:18px;background:rgba(8,31,58,.66);backdrop-filter:blur(4px)}
+.av-os-dialog{background:white;border-radius:22px;width:min(100%,530px);max-height:min(94dvh,870px);overflow:auto;padding:30px;box-shadow:0 25px 90px #06182c55;border:1px solid #dce8f3}
+.av-os-form-dialog{width:min(100%,660px)}
+.av-os-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:20px}
+.av-os-eyebrow{font-size:10px;color:#487ba1;font-weight:900;letter-spacing:.1em}
+.av-os-eyebrow b{background:#eaf3fb;border-radius:6px;padding:5px 7px;white-space:nowrap;margin-left:5px;font-size:9px;letter-spacing:.04em;color:#23578d}
+.av-os-x{color:#527089;background:#edf4f9;border:0;width:37px;height:37px;border-radius:50%;font-size:25px;line-height:1;cursor:pointer;flex:none}
+.av-os-hero-icon{width:52px;height:52px;border-radius:17px;display:grid;place-items:center;color:#8b5a08;background:#fff2d9;font-size:29px;font-weight:800;margin-bottom:14px}
+.av-os-dialog h2{color:#173f65;font-size:clamp(22px,4vw,27px);letter-spacing:-.03em;line-height:1.18;margin:0 0 11px;font-weight:850}
+.av-os-lead{font-size:14px;line-height:1.6;color:#5a7288;margin:0 0 18px}
+.av-os-detail{border-radius:14px;border:1px solid #dce7ee;background:#f7fafc;padding:16px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.av-os-detail strong{font-size:13px;line-height:1.4;color:#173c60}
+.av-os-detail span{font-size:11px;color:#407a38;font-weight:800;white-space:nowrap}
+.av-os-detail i{display:inline-block;width:7px;height:7px;border-radius:50%;background:#76b65a;margin-right:6px}
+.av-os-disclaimer{background:#f1f6fa;color:#59738b;border-radius:11px;padding:12px 14px;font-size:11px;line-height:1.5;margin-top:16px}
+.av-os-actions{display:flex;justify-content:flex-end;margin-top:21px}
+.av-os-actions .av-os-primary{min-width:185px}
+.av-os-form{display:grid;gap:10px}
+.av-os-form label{font-size:12px;font-weight:800;color:#244967}
+.av-os-form input,.av-os-form select,.av-os-form textarea{width:100%;border:1px solid #d3e1eb;background:white;border-radius:9px;min-height:42px;padding:10px 12px;font:500 13px Ubuntu,Verdana,Tahoma,system-ui,sans-serif;color:#244967;outline:none}
+.av-os-form textarea{resize:vertical}
+.av-os-form input:focus,.av-os-form select:focus,.av-os-form textarea:focus{border-color:#317fc0;box-shadow:0 0 0 3px #c4e5fa}
+.av-os-form .av-os-fields{display:grid;grid-template-columns:2fr 1fr;gap:10px}
+.av-os-fields>div{display:grid;gap:7px}
+.av-os-loc-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:8px}
+.av-os-loc-row span{font-size:12px;font-weight:800;color:#244967}
+.av-os-loc-row button{border:1px solid #b8d4e7;background:#edf7fd;color:#1e5d95;border-radius:8px;padding:8px 12px;cursor:pointer;font-weight:800;font-size:12px}
+.av-os-help{color:#617c91;font-size:12px;margin:0;line-height:1.4}
+.av-os-submit{width:100%;margin-top:6px}
+.av-os-overlay button:focus-visible{outline:3px solid #83cbed;outline-offset:3px}
+@media(max-width:700px){
+ .av-os-promo{margin:25px 12px;flex-wrap:wrap;padding:20px;gap:12px}
+ .av-os-promo-text{flex-basis:calc(100% - 75px)}
+ .av-os-cta{width:100%;justify-content:center}
+ .av-os-dialog{padding:21px;border-radius:18px}
+ .av-os-form .av-os-fields{grid-template-columns:1fr}
+ .av-os-loc-row{flex-wrap:wrap}
+ .av-os-eyebrow{letter-spacing:.03em}
+}
+

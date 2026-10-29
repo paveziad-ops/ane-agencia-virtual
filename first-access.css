@@ -1,0 +1,60 @@
+/* First access only. The approved login, landing and internal pages remain unchanged. */
+#app .first-access-card .first-progress{
+  display:flex;align-items:center;gap:9px;margin:3px 0 27px;flex-wrap:nowrap;
+}
+#app .first-access-card .first-progress-step{
+  display:inline-flex;align-items:center;gap:6px;white-space:nowrap;
+  color:#8299ab;font-size:10px;font-weight:800;
+}
+#app .first-access-card .first-progress-step::first-letter{font-weight:800}
+#app .first-access-card .first-progress-step.is-current{color:#126baf}
+#app .first-access-card .first-progress-line{
+  flex:1;min-width:12px;max-width:38px;height:2px;border-radius:10px;background:#dfe8f1;
+}
+#app .first-access-card .first-progress-line.is-done{background:#1489c7}
+#app .first-access-card .first-notice{
+  display:flex;align-items:flex-start;gap:11px;background:#eff8fd;
+  border:1px solid #d4e8f5;border-radius:10px;padding:12px 14px;margin:2px 0 19px;
+}
+#app .first-access-card .first-notice svg,
+#app .first-access-card .first-next-card svg{
+  flex:none;width:20px;height:20px;color:#2a83b7;stroke:currentColor;
+  stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;fill:none;
+}
+#app .first-access-card .first-notice p{
+  margin:0;color:#416785;font-size:11px;line-height:1.6;
+}
+#app .first-access-card .auth-final-error[hidden]{display:none}
+#app .first-access-card .first-to-login,
+#app .first-access-card .first-back{
+  display:flex;align-items:center;justify-content:center;gap:7px;
+  margin:17px auto 0;padding:5px 9px;background:transparent;border:0;
+  color:#1761a5;font-size:12px;font-weight:800;font-family:inherit;cursor:pointer;
+}
+#app .first-access-card .first-to-login:hover,
+#app .first-access-card .first-back:hover{text-decoration:underline}
+#app .first-access-card .first-back svg{
+  width:15px;height:15px;stroke:currentColor;stroke-width:2;
+  stroke-linejoin:round;stroke-linecap:round;fill:none;
+}
+#app .first-access-card .first-next-card{
+  display:flex;flex-direction:column;align-items:flex-start;gap:9px;
+  background:#eff8fd;border:1px solid #d4e8f5;border-radius:12px;
+  padding:18px 19px;margin:12px 0;
+}
+#app .first-access-card .first-next-card svg{width:26px;height:26px}
+#app .first-access-card .first-next-card strong{font-size:14px;color:#1e537f}
+#app .first-access-card .first-next-card p{
+  margin:0;font-size:12px;color:#53718b;line-height:1.75;
+}
+#app .first-access-card .first-activation-note{
+  font-size:11px;color:#728ba3;line-height:1.6;margin:13px 0 16px;
+}
+#app .first-access-card .auth-final-submit:disabled{
+  opacity:.60;cursor:not-allowed;box-shadow:none;transform:none;
+}
+@media(max-width:490px){
+  #app .first-access-card .first-progress{gap:5px;margin-bottom:18px}
+  #app .first-access-card .first-progress-step{font-size:9px;gap:3px}
+  #app .first-access-card .first-progress-line{min-width:6px;max-width:18px}
+}

@@ -1,0 +1,11 @@
+/* Scoped: masked identity confirmation in public invoice payment */
+#app .av-confirmacao-dados{display:flex;gap:14px;align-items:flex-start;margin:12px 0 18px;padding:17px;border:1px solid #d5e5f2;border-radius:15px;background:#f5f9fc;color:#203f60;min-width:0}
+#app .av-confirmacao-icon{display:grid;place-items:center;flex:0 0 44px;width:44px;height:44px;background:#e2eef8;border-radius:50%;color:#1f5f99;font-size:27px;font-weight:600;line-height:1}
+#app .av-confirmacao-details{flex:1;min-width:0}
+#app .av-confirmacao-field{display:flex;flex-direction:column;gap:3px;margin-bottom:12px}
+#app .av-confirmacao-label{font-size:12px;font-weight:500;color:#7994a9}
+#app .av-confirmacao-value{font-size:14px;line-height:1.5;font-weight:800;color:#174166;overflow-wrap:anywhere}
+#app .av-confirmacao-status{font-size:12px;line-height:1.5;margin:2px 0 10px;color:#607a90}
+#app .av-confirmacao-footer{font-size:10px;line-height:1.5;color:#7e98ac;margin:4px 0 0;padding-top:10px;border-top:1px solid #dbe8f1}
+@media(max-width:520px){#app .av-confirmacao-dados{padding:14px;gap:11px}#app .av-confirmacao-icon{flex-basis:39px;width:39px;height:39px;font-size:24px}#app .av-confirmacao-value{font-size:13px}}
+

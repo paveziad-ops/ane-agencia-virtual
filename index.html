@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="pt-BR"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="icon" type="image/svg+xml" href="/brand/ane-favicon.svg">
+<meta name="theme-color" content="#1D4696"><meta name="robots" content="noindex,nofollow">
+<title>Agência Virtual ANE</title>
+<meta name="description" content="Agência Virtual ANE">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Agência Virtual ANE">
+<meta property="og:description" content="Agência Virtual ANE">
+<meta property="og:site_name" content="Agência Virtual ANE">
+<meta property="og:url" content="https://agencia-virtual-ane.vercel.app/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Agência Virtual ANE">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/login-final.css">
+<link rel="stylesheet" href="/services-final.css">
+<link rel="stylesheet" href="/consumption-mixed.css">
+<link rel="stylesheet" href="/invoice-redesign.css">
+<link rel="stylesheet" href="/invoice-payment-fix.css">
+<link rel="stylesheet" href="/first-access.css">
+<style>
+.consumption-bars{height:190px;padding-top:26px;overflow:visible}
+.consumption-bars .bar::before{content:attr(data-value);position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);font-size:clamp(9px,2.7vw,12px);font-weight:800;color:#1d4696;white-space:nowrap;pointer-events:none;line-height:1.15}
+</style><link rel="stylesheet" href="/av-os-notices-preview.css">
+<link rel="stylesheet" href="/confirmacao-fatura.css">
+<link rel="stylesheet" href="/navigation-sync.css">
+<link rel="stylesheet" href="/av-public-occurrence-intro.css">
+<style data-ane-property-layout-fix="1">
+/* Agencia Virtual - ajustes responsivos da pagina Meus Imoveis. */
+/* Sair ja permanece disponivel no cabecalho autenticado. */
+#app .content-wrap .page-header > button[onclick*="logOut"] { display: none !important; }
+@media (max-width: 770px) {
+  #app main.container.content-wrap[style*="max-width:850px"] {
+    box-sizing: border-box; width: calc(100% - 30px) !important;
+    max-width: 600px !important; min-width: 0; margin-inline: auto; overflow-x: clip;
+  }
+  #app main.container.content-wrap[style*="max-width:850px"] .page-header,
+  #app main.container.content-wrap[style*="max-width:850px"] .page-header > div,
+  #app main.container.content-wrap[style*="max-width:850px"] .property-search,
+  #app main.container.content-wrap[style*="max-width:850px"] .property-list,
+  #app main.container.content-wrap[style*="max-width:850px"] .banner-demo {
+    min-width: 0; max-width: 100%;
+  }
+  #app main.container.content-wrap[style*="max-width:850px"] .page-header h1,
+  #app main.container.content-wrap[style*="max-width:850px"] .banner-demo {
+    overflow-wrap: anywhere;
+  }
+  #app main.container.content-wrap[style*="max-width:850px"] .property-search input {
+    min-width: 0; max-width: 100%; font-size: 16px !important;
+  }
+  #app main.container.content-wrap[style*="max-width:850px"] .property-search > button {
+    max-width: 100%; min-width: 0;
+  }
+  #app main.container.content-wrap[style*="max-width:850px"] .tabs-inline {
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px; width: 100%; min-width: 0; max-width: 100%;
+  }
+  #app main.container.content-wrap[style*="max-width:850px"] .tabs-inline > button {
+    min-width: 0; max-width: 100%; padding: 10px 5px;
+    font-size: 11px; white-space: normal; overflow-wrap: anywhere; line-height: 1.35;
+  }
+  #app main.container.content-wrap[style*="max-width:850px"] .property,
+  #app main.container.content-wrap[style*="max-width:850px"] .property-desc {
+    min-width: 0; max-width: 100%; overflow-wrap: anywhere;
+  }
+}
+</style><link rel="stylesheet" href="/ios-autofill-stability.css">
+<link rel="stylesheet" href="/brand-oficial.css">
+</head><body>
+<div id="app"></div><div id="toast" role="status" aria-live="polite"></div>
+<script defer src="/app.js"></script>
+<script defer src="/bridge-auth.js"></script>
+<script defer src="/bridge-data.js"></script>
+<script defer src="/bridge-lookup.js"></script>
+<script defer src="/bridge-quick.js"></script>
+<script defer src="/bridge-login-final.js"></script>
+<script defer src="/bridge-services-final.js"></script>
+<script defer src="/bridge-first-access.js"></script>
+<script defer src="/bridge-consumption-mixed.js"></script>
+<script defer src="/bridge-invoice-redesign.js"></script>
+<script defer src="/bridge-invoice-payment-fix.js"></script>
+<script>
+(function(){
+function showLabels(){var root=document.getElementById('app');if(!root)return;root.querySelectorAll('.consumption-bars .bar').forEach(function(bar){var label=(bar.getAttribute('title')||'').split(':').slice(1).join(':').trim();if(label && bar.dataset.value!==label)bar.dataset.value=label;})}
+function start(){var root=document.getElementById('app');if(!root)return;showLabels();new MutationObserver(showLabels).observe(root,{childList:true,subtree:true});window.addEventListener('hashchange',showLabels)}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
+})();
+</script><script defer src="/email-quick.js"></script>
+<script defer src="/bridge-confirmacao-fatura.js"></script>
+<script defer src="/av-os-notices-preview.js"></script>
+<script defer src="/bridge-navigation-sync.js"></script>
+<script defer src="/av-public-occurrence-intro.js"></script>
+<script defer src="/ios-autofill-stability.js"></script>
+</body></html>

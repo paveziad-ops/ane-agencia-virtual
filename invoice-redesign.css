@@ -1,0 +1,125 @@
+
+/* Apenas Faturas e Pix autenticado. Demais telas e layouts permanecem intocados. */
+#app .invoices-refined{padding:23px 24px 20px}
+#app .invoices-refined .inv-section-title{
+ display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:17px
+}
+#app .invoices-refined .inv-section-title .kicker{
+ font-weight:800;font-size:10px;letter-spacing:.13em;color:#1481b6
+}
+#app .invoices-refined .inv-section-title h2{
+ font-size:23px;letter-spacing:-.035em;color:#223367;margin:6px 0 4px
+}
+#app .invoices-refined .inv-section-title p{
+ margin:0;color:#708ca9;font-size:12px
+}
+#app .inv-financial{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px;margin-bottom:24px}
+#app .inv-summary-card{
+ border-radius:12px;border:1px solid #dce8f3;background:#f7fbfe;
+ padding:16px 16px 14px;display:flex;flex-direction:column;gap:8px;
+ min-width:0
+}
+#app .inv-summary-title{
+ font-size:10px;letter-spacing:.065em;font-weight:800;color:#547aa0
+}
+#app .inv-summary-card strong{
+ font-size:23px;font-weight:800;letter-spacing:-.04em;color:#214d80;
+ overflow-wrap:anywhere;font-variant-numeric:tabular-nums
+}
+#app .inv-summary-card small{font-size:10px;line-height:1.5;color:#738daa}
+#app .inv-card-overdue{border-color:#e8d7d4;background:#fff9f8}
+#app .inv-card-overdue strong{color:#97544a}
+#app .inv-card-paid{border-color:#d6eade;background:#f7fcf9}
+#app .inv-card-paid strong{color:#296b50}
+#app .inv-group{margin-top:21px}
+#app .inv-group-head{
+ display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;
+ gap:11px;margin-bottom:12px
+}
+#app .inv-group-head h3{
+ color:#1c4874;letter-spacing:-.03em;font-size:17px;margin:0;font-weight:800
+}
+#app .inv-group-head p,#app .inv-group-sub{
+ margin:3px 0 0;color:#768fa9;font-size:11px
+}
+#app .inv-open-row{
+ background:#fff;border:1px solid #d9e6f2;border-radius:12px;
+ padding:15px 17px;margin:9px 0
+}
+#app .inv-open-title{display:flex;justify-content:space-between;gap:14px;align-items:flex-start}
+#app .inv-open-title>div:first-child{
+ display:flex;flex-direction:column;align-items:flex-start;gap:5px;min-width:0
+}
+#app .inv-open-title strong{font-size:14px;color:#214b7d;font-weight:800}
+#app .inv-invoice-id,#app .inv-date{
+ font-size:11px;color:#7c92ab;line-height:1.45
+}
+#app .inv-open-right{
+ display:flex;align-items:flex-end;flex-direction:column;gap:8px;min-width:120px
+}
+#app .inv-money{font-size:18px!important;font-weight:800;color:#24508b!important;white-space:nowrap}
+#app .inv-status{
+ display:inline-flex;align-items:center;justify-content:center;border-radius:20px;
+ min-width:0;padding:5px 9px;font-size:9px;font-weight:800;white-space:nowrap
+}
+#app .inv-status-open{background:#eaf5e2;color:#427e29}
+#app .inv-status-late{background:#fce9e7;color:#a4463e}
+#app .inv-status-paid{background:#e7f5dd;color:#377b22}
+#app .inv-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+#app .inv-action{
+ background:#fff;border:1px solid #cadbec;color:#25508b;padding:8px 12px;
+ border-radius:8px;font-family:inherit;font-size:11px;line-height:1.35;
+ font-weight:800;cursor:pointer;transition:background .15s,border-color .15s
+}
+#app .inv-action:hover{background:#eff7ff;border-color:#8cb3df}
+#app .inv-action-main{background:#ebf5ff;border-color:#bcd7f2}
+#app .inv-year{display:flex;align-items:center;gap:9px;font-size:11px;
+ color:#55799d;font-weight:800;white-space:nowrap}
+#app .inv-year select{
+ padding:9px 11px;color:#24508c;background:#fff;border:1px solid #c8dcef;
+ font:inherit;font-size:12px;border-radius:9px;min-width:90px;cursor:pointer
+}
+#app .inv-table-scroll{overflow-x:auto;border:1px solid #dae7f1;border-radius:12px}
+#app .inv-history-table{
+ width:100%;border-collapse:collapse;min-width:575px;font-size:11px
+}
+#app .inv-history-table th{
+ padding:10px 14px;text-align:left;color:#6383a0;background:#f6fafd;
+ font-size:10px;font-weight:800;white-space:nowrap;border-bottom:1px solid #dceaf5
+}
+#app .inv-history-table td{
+ padding:12px 14px;text-align:left;vertical-align:middle;color:#345f83;
+ border-bottom:1px solid #e6eff7
+}
+#app .inv-history-table tbody tr:last-child td{border-bottom:none}
+#app .inv-history-table td strong{display:block;color:#254c7b;font-weight:800}
+#app .inv-history-table td small{display:block;color:#7b98b1;margin-top:5px}
+#app .inv-history-table td span{display:block}
+#app .inv-history-table .inv-table-value{font-weight:800;font-size:13px;color:#214d83;white-space:nowrap}
+#app .inv-paid-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+#app .inv-paid-pdf{font-size:10px;padding:6px 9px}
+#app .inv-empty{
+ border:1px solid #dbe8f2;border-radius:11px;background:#f8fbfd;
+ color:#66819c;font-size:12px;line-height:1.6;padding:18px
+}
+#app .inv-error{background:#fff7f6;color:#9b4444;border-color:#efdbd8}
+#app .inv-show-more{
+ margin-top:12px;border:1px solid #bbd4ef;border-radius:8px;
+ background:#f4f9fe;color:#27568a;font-weight:800;font-size:11px;
+ padding:9px 12px;cursor:pointer;font-family:inherit
+}
+#app .inv-payment-note{margin:19px 0 0;color:#7792a8;font-size:11px;line-height:1.55}
+@media(max-width:780px){
+ #app .inv-financial{grid-template-columns:repeat(2,minmax(0,1fr))}
+ #app .inv-summary-card:last-child{grid-column:1 / -1}
+}
+@media(max-width:520px){
+ #app .invoices-refined{padding:18px 14px}
+ #app .inv-financial{grid-template-columns:1fr}
+ #app .inv-summary-card:last-child{grid-column:auto}
+ #app .inv-open-title{align-items:flex-start}
+ #app .inv-open-right{min-width:0}
+ #app .inv-money{font-size:16px!important}
+ #app .inv-actions{gap:6px}
+ #app .inv-action{padding:8px 9px}
+}

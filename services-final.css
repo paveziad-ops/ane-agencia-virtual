@@ -1,0 +1,88 @@
+/* Only affects the four unavailable public service cards, without modifying the approved grid. */
+#app .service-preview .tile.tile-soon{
+  opacity:1;
+  cursor:default;
+  transform:none;
+}
+#app .service-preview .tile.tile-soon:hover{
+  transform:none;
+  border-color:var(--stroke);
+  box-shadow:none;
+}
+#app .service-preview .tile.tile-soon .service-soon-tag{
+  position:absolute;
+  top:17px;
+  right:17px;
+  color:#68829a;
+  background:#eff4f8;
+  border:1px solid #e2ebf2;
+  border-radius:16px;
+  font-size:10px;
+  font-weight:700;
+  padding:4px 9px;
+  line-height:1.3;
+  letter-spacing:.01em;
+}
+@media(max-width:750px){
+  #app .service-preview .tile.tile-soon .service-soon-tag{
+    right:10px;
+    top:11px;
+    padding:3px 7px;
+    font-size:9px;
+  }
+}
+/* The public Entrar action is brand-blue on both landing and login headers. */
+#app .topbar .header-action .btn.outline[onclick="startLogin()"]{
+  background:var(--blue);
+  border-color:var(--blue);
+  color:#fff;
+}
+#app .topbar .header-action .btn.outline[onclick="startLogin()"]:hover{
+  background:#223367;
+  border-color:#223367;
+}
+
+
+/* Logged-in Minha conta: same visual rule as public Entrar. */
+#app .topbar .header-action .btn.outline[onclick="change('painel')"]{
+  background:var(--blue);border-color:var(--blue);color:#fff;
+}
+#app .topbar .header-action .btn.outline[onclick="change('painel')"]:hover{
+  background:#223367;border-color:#223367;
+}
+/* Documents route only. No global layout changes. */
+#app .docs-real-identity{
+  display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,0.75fr) minmax(0,1.2fr);
+  gap:14px;background:#edf5fb;border:1px solid #d5e7f5;border-radius:11px;
+  padding:17px 20px;margin-bottom:18px;
+}
+#app .docs-real-identity>div{display:flex;flex-direction:column;min-width:0;gap:4px}
+#app .docs-real-identity span{font-size:10px;letter-spacing:.08em;color:#5e87a5;font-weight:800}
+#app .docs-real-identity strong{font-size:13px;font-weight:800;color:#214d77;overflow-wrap:anywhere}
+#app .docs-real-identity small{font-size:10px;line-height:1.45;color:#6d8aa0}
+#app .docs-year-panel{
+  background:#f8fbfe;border:1px solid #d8e7f2;border-radius:11px;
+  padding:17px 20px;margin-top:15px;
+}
+#app .docs-year-controls{display:flex;gap:12px;align-items:end;flex-wrap:wrap}
+#app .docs-year-field{display:flex;flex-direction:column;gap:6px;min-width:180px}
+#app .docs-year-field label{font-size:11px;font-weight:800;color:#244d73}
+#app .docs-year-field select{height:39px;width:200px;max-width:100%}
+#app .docs-year-summary{
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;
+  gap:8px;padding:14px 0 10px;color:#284f73;font-size:12px
+}
+#app .docs-year-rows{border-top:1px solid #dce8f2;margin-top:8px}
+#app .docs-year-row{display:flex;justify-content:space-between;gap:12px;
+  padding:10px 0;border-bottom:1px solid #e2edf5;font-size:12px;color:#294e70}
+#app .docs-year-row span{display:flex;flex-direction:column;gap:4px}
+#app .docs-year-row small{font-size:10px;color:#7391a8}
+#app .docs-year-row b{white-space:nowrap}
+#app .docs-year-note{font-size:11px;color:#617d93;line-height:1.7;margin-top:12px}
+#app .docs-loading{font-size:12px;color:#315d7e;margin-top:14px}
+#app .docs-error{font-size:12px;color:#a32a3a;margin-top:14px}
+@media(max-width:740px){
+  #app .docs-real-identity{grid-template-columns:1fr;gap:12px}
+  #app .docs-year-controls{align-items:stretch}
+  #app .docs-year-field{min-width:0}
+}

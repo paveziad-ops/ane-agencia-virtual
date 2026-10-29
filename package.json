@@ -1,0 +1,12 @@
+{
+  "name": "ane-agencia-virtual-homologacao",
+  "version": "0.1.0-ane",
+  "private": true,
+  "dependencies": {
+    "nodemailer": "^7.0.11"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "description": "Agência Virtual ANE - frontend + funções serverless (Vercel) integradas ao VerSan"
+}
