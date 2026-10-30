@@ -42,6 +42,19 @@ function endereco(l) {
   return partes.join(' · ').slice(0, 110);
 }
 
+/** E-mail cadastrado da pessoa no VerSan (vazio se não houver um válido). */
+function emailDe(p) {
+  const e = String((p && p.email) || '').trim().toLowerCase();
+  return e.length <= 254 && /^[^\s@<>]{1,64}@[^\s@<>]{1,185}\.[a-z]{2,}$/i.test(e) ? e : '';
+}
+
+/** Mostra o e-mail com parte oculta, ex.: ma***@exemplo.com */
+function emailOculto(e) {
+  if (!e) return '';
+  const [u, d] = e.split('@');
+  return u.slice(0, Math.min(2, u.length - 1) || 1) + '***@' + d;
+}
+
 /** Monta a sessão compacta a partir do retorno de getAutenticacaoPessoa. */
 function sessaoDe(auth) {
   const pessoas = (auth.aPessoa || []).filter(p => p && Number(p.id) > 0);
@@ -49,6 +62,7 @@ function sessaoDe(auth) {
   const p0 = pessoas[0] || {};
   const s = {
     n: String(p0.nome || '').trim().slice(0, 120),
+    em: emailDe(p0),
     pe: pessoas.map(p => ({ id: Number(p.id), e: Number(p.idPessoaEmail) || 0 })),
     im: ligacoes.map(l => ({ c: V.cdcDaLigacao(l.id), l: String(Number(l.id)), p: Number(l.idPessoa) || Number(p0.id) || 0, a: endereco(l), m: l.entregaPorEmail === true, s: situacao(l) })),
     sel: ligacoes.length ? V.cdcDaLigacao(ligacoes[0].id) : ''
@@ -66,6 +80,7 @@ function publico(s) {
     primeiroNome: primeiroNome(s.n),
     imoveis: s.im.map(i => ({ cdc: i.c, endereco: i.a, entregaPorEmail: i.m, situacaoCobranca: i.s || undefined })),
     cdcSelecionado: s.sel,
+    emailCadastrado: emailOculto(s.em),
     base: 'ANE'
   };
 }

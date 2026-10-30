@@ -28,24 +28,40 @@ function open(button){
  const doc=invoiceFrom(button);
  if(!doc){const desc=button.closest('.qp-footer')?.querySelector('.qp-desc');if(desc)desc.textContent='Não foi possível identificar a fatura. Consulte novamente.';return;}
  current=doc;returnFocus=button;
- const m=ensureModal();const f=m.querySelector('form');f.reset();
+ const m=ensureModal();const f=m.querySelector('form');f.reset();modo(m,null);
  m.querySelector('.qpe-number strong').textContent='Nº '+doc.idFatura;
  const status=m.querySelector('.qpe-result');status.textContent='';status.removeAttribute('data-ok');
  m.querySelector('.qpe-submit').disabled=false;m.querySelector('.qpe-submit').textContent='Enviar fatura';
  oldOverflow=document.body.style.overflow;document.body.style.overflow='hidden';m.hidden=false;
  m.querySelector('#qpe-email').focus();
 }
-// Abre o envio a partir da área logada (bridge-invoice-payment-fix.js), com CDC e fatura já conhecidos.
+// Área logada: envia só para o e-mail cadastrado da pessoa (o servidor também garante isso).
+function modo(m,logado){
+ const input=m.querySelector('#qpe-email'),label=m.querySelector('label[for=qpe-email]'),note=m.querySelector('.qpe-note'),accept=m.querySelector('.qpe-accept span');
+ let fixo=m.querySelector('.qpe-fixed');
+ if(!fixo){fixo=document.createElement('p');fixo.className='qpe-fixed';fixo.style.cssText='font-size:13px;line-height:1.5;margin:0 0 15px;color:#24445e';label.before(fixo);}
+ const ativo=logado!==null;
+ for(const el of [input,label,note])el.style.display=ativo?'none':'';input.required=!ativo;input.disabled=ativo;fixo.style.display=ativo?'':'none';
+ accept.textContent=ativo?'Confirmo que desejo receber esta fatura no meu e-mail cadastrado.':'Confirmo que desejo receber esta fatura no endereço informado.';
+ if(ativo){fixo.textContent=logado?'A fatura será enviada para o seu e-mail cadastrado: '+logado:'Verificando seu e-mail cadastrado...';}
+}
 window.qpeOpenFor=function(cdc,idFatura,button){
  cdc=String(cdc||'');idFatura=String(idFatura||'');
  if(!/^\d{1,10}$/.test(cdc)||!/^\d{1,12}$/.test(idFatura))return;
- current={cdc,idFatura};returnFocus=button||null;
- const m=ensureModal();const f=m.querySelector('form');f.reset();
+ current={cdc,idFatura,logado:true};returnFocus=button||null;
+ const m=ensureModal();const f=m.querySelector('form');f.reset();modo(m,'');
  m.querySelector('.qpe-number strong').textContent='Nº '+idFatura;
  const status=m.querySelector('.qpe-result');status.textContent='';status.removeAttribute('data-ok');
- m.querySelector('.qpe-submit').disabled=false;m.querySelector('.qpe-submit').textContent='Enviar fatura';
+ const send=m.querySelector('.qpe-submit');send.disabled=true;send.textContent='Enviar fatura';
  oldOverflow=document.body.style.overflow;document.body.style.overflow='hidden';m.hidden=false;
- m.querySelector('#qpe-email').focus();
+ m.querySelector('.qpe-close').focus();
+ fetch('/api/versan/cliente',{method:'POST',credentials:'same-origin',cache:'no-store',headers:{'Content-Type':'application/json'},body:JSON.stringify({acao:'status'})})
+  .then(r=>r.json().then(j=>({ok:r.ok,j}))).then(({ok,j})=>{
+   if(!current||current.idFatura!==idFatura)return;
+   if(!ok){m.querySelector('.qpe-fixed').textContent=j.mensagem||'Sessão expirada. Entre novamente.';return;}
+   if(!j.emailCadastrado){m.querySelector('.qpe-fixed').textContent='Não há e-mail cadastrado na sua conta. Procure o atendimento para cadastrar.';return;}
+   modo(m,j.emailCadastrado);send.disabled=false;
+  }).catch(()=>{if(current)m.querySelector('.qpe-fixed').textContent='Não foi possível verificar seu e-mail cadastrado. Tente novamente.';});
 };
 function close(){
  if(!shade||busy)return;
@@ -57,7 +73,7 @@ async function submit(event){
  if(busy||!current)return;
  const form=event.currentTarget;if(!form.reportValidity())return;
  const status=form.querySelector('.qpe-result'),send=form.querySelector('.qpe-submit');
- const email=form.elements.email.value.trim();
+ const email=current.logado?'':form.elements.email.value.trim();
  busy=true;send.disabled=true;send.textContent='Enviando...';status.removeAttribute('data-ok');
  status.textContent='Solicitando envio ao servidor...';
  try{

@@ -88,7 +88,17 @@ module.exports = async function (req, res) {
     const body = await H.readBody(req);
     const cdc = P.cdcValido(body.cdc);
     const idFatura = P.idFaturaValido(body.idFatura);
-    const email = String(body.email || '').trim();
+    let email = String(body.email || '').trim();
+    if (body.logado === true) {
+      // Área logada: só envia para o e-mail cadastrado da pessoa (o e-mail digitado é ignorado)
+      // e só para imóvel vinculado a ela.
+      const sessao = H.getSession(req);
+      if (!sessao) return H.send(res, 401, { ok: false, mensagem: 'Sessão expirada. Entre novamente.' });
+      if (!(sessao.im || []).some(i => String(i.c) === String(cdc))) return H.send(res, 403, { ok: false, mensagem: 'Imóvel não vinculado à sua conta.' });
+      if (sessao.em === undefined) return H.send(res, 401, { ok: false, mensagem: 'Sessão expirada. Entre novamente.' });
+      if (!sessao.em) return H.send(res, 400, { ok: false, mensagem: 'Não há e-mail cadastrado na sua conta. Procure o atendimento para cadastrar.' });
+      email = sessao.em;
+    }
     if (email.length > 254 || !EMAIL_RE.test(email)) return H.send(res, 400, { ok: false, mensagem: 'Informe um e-mail válido.' });
     regrasPiloto(email);
 
