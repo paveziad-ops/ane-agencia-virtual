@@ -252,7 +252,7 @@
     if(!state.logged)return original;
     syncProperty();
     let html=original;
-    html=html.replace('ÁREA DO CONSUMIDOR · DEMONSTRAÇÃO','ÁREA DO CONSUMIDOR · VER SAN');
+    html=html.replace('ÁREA DO CONSUMIDOR · DEMONSTRAÇÃO','ÁREA DO CONSUMIDOR');
     html=html.replace(/<div class="banner-demo" style="margin-bottom:18px">Você está explorando uma [\s\S]*?<\/div>/,identity());
     html=html.replace(/(<div class="user-brief"><b>)[\s\S]*?(<\/b>)/,
       (_m,left,right)=>left+esc(accountName().name)+right);
@@ -336,14 +336,14 @@
       '<div><span>INDICADOR EXIBIDO</span><strong>Volume faturado (m³)</strong>'+
       '<small>Não confundir com o volume medido pelo hidrômetro.</small></div></div>';
 
-    html=html.replace('ÁREA DO CONSUMIDOR · DEMONSTRAÇÃO','ÁREA DO CONSUMIDOR · VER SAN');
+    html=html.replace('ÁREA DO CONSUMIDOR · DEMONSTRAÇÃO','ÁREA DO CONSUMIDOR');
     html=html.replace(/<div class="banner-demo" style="margin-bottom:18px">Você está explorando uma [\s\S]*?<\/div>/,identity);
     html=html.replace(/(<div class="user-brief"><b>)[\s\S]*?(<\/b>)/,
       (_match,left,right)=>left+esc(customer.name)+right);
     html=html.replace('Sair da demonstração','Sair da conta');
     html=html.replace('<h2>Evolução mensal</h2>','<h2>Volume faturado por mês</h2>');
     html=html.replace(/Volumes faturados em ([0-9]{4}), conforme getHistoricoConsumo\./,
-      'Volumes faturados em $1 (m³), conforme o VerSan.');
+      'Volumes faturados em $1 (m³).');
     html=html.replace('Consumo médio do período','Média do volume faturado');
     return html;
   };

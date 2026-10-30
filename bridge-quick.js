@@ -112,7 +112,7 @@ function payment(card,cdc,item,items,original){
 const my=++changeToken;card.classList.add('qp');card.replaceChildren();
 const goBack=items.length>1?()=>selector(card,cdc,items,original):()=>restore(card,original);
 title(card,'Segunda via da fatura','Escolha a forma de pagamento da sua fatura.',items.length>1?'Voltar às faturas':'Nova consulta',goBack);
-card.appendChild(e('div','qp-id','Fatura nº '+item.idFatura+' · Base ANE / VerSan'));
+card.appendChild(e('div','qp-id','Fatura nº '+item.idFatura+''));
 summary(card,cdc,item);
 const tabs=e('div','qp-tabs');tabs.setAttribute('role','tablist');
 const pixTab=e('button','qp-tab');pixTab.type='button';pixTab.setAttribute('role','tab');

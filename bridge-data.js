@@ -19,7 +19,7 @@
   return null;
  }
  function notice(title,details){
-  return '<section class="module"><div class="kicker">DADOS REAIS · VER SAN</div><h2>'+esc(title)+'</h2><p>'+esc(details)+'</p></section>';
+  return '<section class="module"><div class="kicker">DADOS DA CONTA</div><h2>'+esc(title)+'</h2><p>'+esc(details)+'</p></section>';
  }
  function bill(x,paid){
   const id=Number(x.idFatura);
@@ -42,15 +42,15 @@
   const nPaid=paid?.error?'Indisponível':paid?paid.data.total+' pagas':'Consultando...';
   const months=usage?.data?.meses||[],last=months[months.length-1];
   const nUse=usage?.error?'Indisponível':usage?(last&&last.volumeFaturado!=null?nfmt(last.volumeFaturado)+' m³':'Sem consumo'):'Consultando...';
-  const cards='<div class="metrics"><div class="metric primary"><div class="metric-row"><span class="iconbox">'+icon('check','lg')+'</span><span class="eyebrow">SITUAÇÃO FINANCEIRA</span></div><h3>'+nDebt+'</h3><p>Faturas reais do CDC '+esc(state.current)+' · VerSan/ANE</p></div>'+
-   metric('ÚLTIMO CONSUMO',nUse,'Volume faturado na base ANE','bars')+
+  const cards='<div class="metrics"><div class="metric primary"><div class="metric-row"><span class="iconbox">'+icon('check','lg')+'</span><span class="eyebrow">SITUAÇÃO FINANCEIRA</span></div><h3>'+nDebt+'</h3><p>Faturas do CDC '+esc(state.current)+'</p></div>'+
+   metric('ÚLTIMO CONSUMO',nUse,'Volume faturado','bars')+
    metric('FATURAS PAGAS',nPaid,'Exercício '+esc(state.year),'receipt')+'</div>';
   return h.slice(0,begin)+cards+h.slice(end);
  };
  invoicePage=function(){
   const due=dataFor('debitos'),paid=dataFor('pagas');
   if(due?.error)return layout('Faturas e pagamentos','Consulte valores, segunda via, Pix e histórico.',notice('Consulta indisponível',due.error));
-  let out='<section class="module"><div class="kicker">FATURAS REAIS · VER SAN / ANE</div><h2>Minhas faturas</h2><p>CDC '+esc(state.current)+' · Informações financeiras da base ANE.</p>';
+  let out='<section class="module"><div class="kicker">FATURAS</div><h2>Minhas faturas</h2><p>CDC '+esc(state.current)+'</p>';
   if(!due)out+='<p>Carregando faturas em aberto...</p>';
   else if(!due.data.faturas?.length)out+='<div class="deliver-banner">Nenhuma fatura em débito encontrada.</div>';
   else out+=(due.data.faturas||[]).map(x=>bill(x,false)).join('');
@@ -74,10 +74,10 @@
   }).join('')+'</div>':'<p>Nenhum histórico encontrado.</p>';
   const nums=v.map(x=>x.volumeFaturado).filter(x=>typeof x==='number');
   const avg=nums.length?nfmt(nums.reduce((a,b)=>a+b,0)/nums.length)+' m³':'—';
-  return layout('Histórico de consumo','Acompanhe seu consumo ao longo dos meses.','<section class="module"><div class="kicker">CONSUMO REAL · ANE</div><h2>Evolução mensal</h2><p>Volumes faturados em '+esc(state.year)+', conforme getHistoricoConsumo.</p>'+bars+'<div style="margin-top:33px" class="row space"><b>Consumo médio do período</b><b>'+avg+'</b></div></section>');
+  return layout('Histórico de consumo','Acompanhe seu consumo ao longo dos meses.','<section class="module"><div class="kicker">CONSUMO</div><h2>Evolução mensal</h2><p>Volumes faturados em '+esc(state.year)+'.</p>'+bars+'<div style="margin-top:33px" class="row space"><b>Consumo médio do período</b><b>'+avg+'</b></div></section>');
  };
  profilePage=function(){
-  return layout('Minha conta','Seu cadastro e imóveis vinculados.','<section class="module"><div class="kicker">CONTA AUTENTICADA · VER SAN</div><h2>'+esc(window.realANEDisplayName(s.user,'Consumidor'))+'</h2><p>CDC atual: '+esc(state.current)+'</p><p>'+locations.length+' imóvel(is) vinculados a esta conta.</p>'+btn('Ver meus imóveis '+icon('arrow','sm'),"change('imoveis')",'outline')+'</section>');
+  return layout('Minha conta','Seu cadastro e imóveis vinculados.','<section class="module"><div class="kicker">MINHA CONTA</div><h2>'+esc(window.realANEDisplayName(s.user,'Consumidor'))+'</h2><p>CDC atual: '+esc(state.current)+'</p><p>'+locations.length+' imóvel(is) vinculados a esta conta.</p>'+btn('Ver meus imóveis '+icon('arrow','sm'),"change('imoveis')",'outline')+'</section>');
  };
  window.realANEPayment=async function(kind,id){
   try{
