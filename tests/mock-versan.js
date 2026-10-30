@@ -1,6 +1,7 @@
 // VerSan simulado, seguindo exatamente rotas e formatos da collection Postman.
 const http=require('http'),fs=require('fs');
 const PDF=fs.readFileSync(__dirname+'/teste.pdf').toString('base64');
+const PDF_OF=fs.readFileSync(__dirname+'/teste-segunda-via.pdf').toString('base64');
 const DS='java:comp/env/jdbc/DataSource';
 let tokens=new Map(),calls=[];
 const pessoa={id:14,cpf:'529.982.247-25',idFisicaJuridica:1,nome:'MARIA DAS GRACAS TESTE',email:'MARIA@EXEMPLO.COM',telefone:'(83) 99999-0000',senha:'',ligacao:[],idPessoaEmail:14,idPessoaTelefone:14,idPessoaTipoTelefone:3,idPessoaTipoEmail:1};
@@ -26,6 +27,7 @@ http.createServer((req,res)=>{let b='';req.on('data',c=>b+=c);req.on('end',()=>{
   case 'getHistoricoConsumo': return j(res,200,body.ano===2026?consumo:[]);
   case 'getCodigoBarras': return j(res,200,{codigoLeitor:'8263000000012001655202203080000000000000'+body.idFatura,codigoDigitavel:'826300000005 120016552024 203080000003 0000000'+body.idFatura});
   case 'getCodigoPixEstatico': return j(res,200,{codigoPix:'00020126580014BR.GOV.BCB.PIX0136798b3a23-6287-48b3-b882-8ac5e28c6bb9520400005303986540412.05802BR5921AGUAS DO NORDESTE S.A6010SANTA RITA62290525FAT'+body.idFatura+'6304B6B0'});
-  case 'getSegundaVia': case 'getSegundaViaOfuscada': return j(res,200,{codigo:0,mensagem:PDF,codigo2:0});
+  case 'getSegundaVia': return j(res,200,{codigo:0,mensagem:PDF,codigo2:0});
+  case 'getSegundaViaOfuscada': return j(res,200,{codigo:0,mensagem:PDF_OF,codigo2:0});
   default: return j(res,404,{});
  }})}).listen(9090,()=>console.log('mock VerSan :9090'));
