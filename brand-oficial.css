@@ -36,3 +36,10 @@
   .logo.official-brand .official-brand-image { width: 132px; }
   .logo.official-brand .official-brand-descriptor { font-size: 8px; }
 }
+
+/* Campo de matrícula (CDC): texto de exemplo menor para "Digite sua matrícula" caber inteiro.
+   O número digitado continua em 16px (evita zoom automático no iPhone). */
+#app .lookup #cdc::placeholder { font-size: 13px; }
+@media (min-width: 761px) and (max-width: 820px) {
+  #app .lookup #cdc::placeholder { font-size: 12px; }
+}
