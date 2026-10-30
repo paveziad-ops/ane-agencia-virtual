@@ -49,7 +49,7 @@ function paymentHTML(info){
   '<div class="qp-footer invoice-payment-footer">'+
   '<button type="button" class="qp-download" onclick="realANEPayment(&#39;pdf&#39;,'+info.id+
     ')">↓  Baixar fatura</button>'+
-  '<button type="button" class="qp-download invoice-email-pending" disabled aria-disabled="true" title="Aguardando a integração de envio de faturas pelo VerSan">✉  Enviar fatura por e-mail · Em breve</button>'+
+  '<button type="button" class="qp-download invoice-email-send" onclick="window.qpeOpenFor&&window.qpeOpenFor('+JSON.stringify(String(info.cdc)).replace(/"/g,'&quot;')+','+info.id+',this)">✉  Enviar fatura por e-mail</button>'+
   '<p class="qp-desc">Segunda via vinculada à sua conta autenticada.</p>'+
   '</div></section>';
 }

@@ -26,3 +26,5 @@
 #app .invoice-payment-footer .invoice-email-pending{margin-top:9px;opacity:.65;cursor:not-allowed}
 #app .inv-history-table .invoice-pdf-result{max-width:245px;padding:8px 9px;margin-top:8px;display:block;overflow-wrap:anywhere}
 #app .inv-history-table .invoice-pdf-result .invoice-pdf-direct-link{display:block;margin-top:7px}
+
+#app .invoice-payment-footer .invoice-email-send{margin-top:9px}

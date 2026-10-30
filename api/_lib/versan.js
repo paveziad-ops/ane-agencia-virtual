@@ -21,15 +21,15 @@
 const PATHS = {
   getSecret: '/Autenticacao/AutenticacaoServices/getSecret',
   getAutenticacaoAplicacao: '/VerSanSegurancaService/SegurancaServices/getAutenticacaoAplicacao',
-  getAutenticacaoPessoa: '/VerSanIntegracaoService/IntegracaoServices/getAutenticacaoPessoa',
-  getFaturaEmDebito: '/VerSanIntegracaoService/IntegracaoServices/getFaturaEmDebito',
-  getFaturaPaga: '/VerSanIntegracaoService/IntegracaoServices/getFaturaPaga',
-  getHistoricoConsumo: '/VerSanIntegracaoService/IntegracaoServices/getHistoricoConsumo',
-  getCodigoBarras: '/VerSanIntegracaoService/IntegracaoServices/getCodigoBarras',
-  getCodigoPixEstatico: '/VerSanIntegracaoService/IntegracaoServices/getCodigoPixEstatico',
-  getSegundaVia: '/VerSanIntegracaoService/RelatorioServices/getSegundaVia',
-  getSegundaViaOfuscada: '/VerSanIntegracaoService/RelatorioServices/getSegundaViaOfuscada',
-  getServicos: '/VerSanIntegracaoService/IntegracaoServices/getServicos'
+  getAutenticacaoPessoa: '/VerSanIntegracaoServiceV2/IntegracaoServices/getAutenticacaoPessoa',
+  getFaturaEmDebito: '/VerSanIntegracaoServiceV2/IntegracaoServices/getFaturaEmDebito',
+  getFaturaPaga: '/VerSanIntegracaoServiceV2/IntegracaoServices/getFaturaPaga',
+  getHistoricoConsumo: '/VerSanIntegracaoServiceV2/IntegracaoServices/getHistoricoConsumo',
+  getCodigoBarras: '/VerSanIntegracaoServiceV2/IntegracaoServices/getCodigoBarras',
+  getCodigoPixEstatico: '/VerSanIntegracaoServiceV2/IntegracaoServices/getCodigoPixEstatico',
+  getSegundaVia: '/VerSanIntegracaoServiceV2/RelatorioServices/getSegundaVia',
+  getSegundaViaOfuscada: '/VerSanIntegracaoServiceV2/RelatorioServices/getSegundaViaOfuscada',
+  getServicos: '/VerSanIntegracaoServiceV2/IntegracaoServices/getServicos'
 };
 
 class VerSanError extends Error {
@@ -245,8 +245,9 @@ function ligacaoDoCdc(cdc) { return String(Number(onlyDigits(cdc))); }
 function cdcDaLigacao(idLigacao) { return String(Number(idLigacao)); }
 
 function cdcPermitido(cdc) {
-  const set = matriculasPermitidas();
-  return !set || set.has(String(Number(cdc)));
+  // Restrição por HOMOLOGATION_MATRICULAS desativada (29/10/2026), igual a Andradas:
+  // aceita qualquer CDC da base. Para reativar, volte a usar matriculasPermitidas() aqui.
+  return true;
 }
 
 function configurado() {

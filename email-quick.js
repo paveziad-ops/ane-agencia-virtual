@@ -35,6 +35,18 @@ function open(button){
  oldOverflow=document.body.style.overflow;document.body.style.overflow='hidden';m.hidden=false;
  m.querySelector('#qpe-email').focus();
 }
+// Abre o envio a partir da área logada (bridge-invoice-payment-fix.js), com CDC e fatura já conhecidos.
+window.qpeOpenFor=function(cdc,idFatura,button){
+ cdc=String(cdc||'');idFatura=String(idFatura||'');
+ if(!/^\d{1,10}$/.test(cdc)||!/^\d{1,12}$/.test(idFatura))return;
+ current={cdc,idFatura};returnFocus=button||null;
+ const m=ensureModal();const f=m.querySelector('form');f.reset();
+ m.querySelector('.qpe-number strong').textContent='Nº '+idFatura;
+ const status=m.querySelector('.qpe-result');status.textContent='';status.removeAttribute('data-ok');
+ m.querySelector('.qpe-submit').disabled=false;m.querySelector('.qpe-submit').textContent='Enviar fatura';
+ oldOverflow=document.body.style.overflow;document.body.style.overflow='hidden';m.hidden=false;
+ m.querySelector('#qpe-email').focus();
+};
 function close(){
  if(!shade||busy)return;
  shade.hidden=true;current=null;document.body.style.overflow=oldOverflow;

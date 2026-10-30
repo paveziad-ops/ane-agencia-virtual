@@ -7,6 +7,10 @@
  * Variáveis de ambiente (SMTP):
  *  SMTP_HOST, SMTP_PORT (padrão 587), SMTP_SECURE ("true" para 465), SMTP_USER, SMTP_PASS (ou SMTP_PASSWORD)
  *  EMAIL_FROM (ou SMTP_FROM)  ex.: "ANE Agência Virtual <naoresponda@ane.com.br>"
+ *
+ * Regras do piloto (mesmos nomes do projeto original de Andradas):
+ *  INVOICE_EMAIL_PDF_APPROVED  se definida, o envio só funciona com "yes" (ou "true") (aprovação do PDF ofuscado)
+ *  INVOICE_EMAIL_PILOT_TO      se definida, só envia para esses e-mails (separados por vírgula)
  */
 const V = require('../_lib/versan');
 const H = require('../_lib/http');
@@ -46,6 +50,19 @@ function html(f) {
     '</table></td></tr></table></body></html>';
 }
 
+/** Regras do piloto: aprovação do PDF e lista de destinatários permitidos. */
+function regrasPiloto(email) {
+  const aprovado = V.env('INVOICE_EMAIL_PDF_APPROVED');
+  if (process.env.INVOICE_EMAIL_PDF_APPROVED !== undefined && !/^(yes|true|1|sim)$/i.test(aprovado)) {
+    throw new V.VerSanError('Envio por e-mail ainda não liberado neste ambiente.', 503);
+  }
+  const piloto = V.env('INVOICE_EMAIL_PILOT_TO');
+  if (piloto) {
+    const lista = piloto.split(/[\s,;]+/).map(s => s.trim().toLowerCase()).filter(Boolean);
+    if (!lista.includes(email.toLowerCase())) throw new V.VerSanError('Neste piloto, o envio só é permitido para e-mails autorizados.', 403);
+  }
+}
+
 function transport() {
   const host = V.env('SMTP_HOST'), from = V.env('EMAIL_FROM');
   if (!host || !from) throw new V.VerSanError('Envio de e-mail não configurado (SMTP_HOST / SMTP_FROM).', 503);
@@ -71,6 +88,7 @@ module.exports = async function (req, res) {
     const idFatura = P.idFaturaValido(body.idFatura);
     const email = String(body.email || '').trim();
     if (email.length > 254 || !EMAIL_RE.test(email)) return H.send(res, 400, { ok: false, mensagem: 'Informe um e-mail válido.' });
+    regrasPiloto(email);
 
     const hora = 60 * 60 * 1000;
     if (!H.rateLimit('mail:ip:' + H.clientIp(req), 5, hora) ||
