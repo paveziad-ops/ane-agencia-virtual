@@ -1,10 +1,11 @@
 'use strict';
 /*
  * POST /api/versan/conferencia-fatura — titular e endereço OFUSCADOS para conferir antes de pagar (bridge-confirmacao-fatura.js).
- *  { cdc, idFatura } -> { ok:true, titularOfuscado, enderecoOfuscado }
+ *  { cdc, idFatura } -> { ok:true, titularOfuscado, enderecoOfuscado, documentoOfuscado? }
  *
  * Fonte: a própria 2ª via ofuscada do VerSan (getSegundaViaOfuscada).
  *  - Titular: campo "Inquilino:" (ou "Proprietário:"), que o VerSan já entrega ofuscado.
+ *  - CPF/CNPJ: campo "CPF/CNPJ:", quando houver (já vem parcialmente oculto pelo VerSan).
  *  - Endereço: campo "Endereço:", que vem completo; é ofuscado aqui antes de sair do servidor.
  */
 const V = require('../_lib/versan');
@@ -42,6 +43,20 @@ function ofuscaEndereco(end) {
   return [ruaOf ? ruaOf + ', ***' : '', bairro, local].filter(Boolean).join(' · ');
 }
 
+/**
+ * CPF/CNPJ com só alguns números visíveis. Se o VerSan já mandou com "*", mantém como veio;
+ * se vier completo, oculta aqui (CPF ***.456.789-**, CNPJ **.345.678/****-**). Formato estranho = não mostra.
+ */
+function ofuscaDocumento(doc) {
+  const s = String(doc || '').trim();
+  if (!s || s.length > 25 || !/^[\d.\-\/* ]+$/.test(s)) return '';
+  if (s.includes('*')) return /\d/.test(s) ? s : '';
+  const d = s.replace(/\D/g, '');
+  if (d.length === 11) return '***.' + d.slice(3, 6) + '.' + d.slice(6, 9) + '-**';
+  if (d.length === 14) return '**.' + d.slice(2, 5) + '.' + d.slice(5, 8) + '/****-**';
+  return '';
+}
+
 module.exports = async function (req, res) {
   if (!H.guard(req, res)) return;
   try {
@@ -55,15 +70,16 @@ module.exports = async function (req, res) {
     const lista = T.textos(pdf);
     const nome = T.valorDoRotulo(lista, 'Inquilino:') || T.valorDoRotulo(lista, 'Proprietário:');
     const endereco = T.valorDoRotulo(lista, 'Endereço:');
+    const documentoOfuscado = ofuscaDocumento(T.valorDoRotulo(lista, 'CPF/CNPJ:'));
     const titularOfuscado = ofuscaNome(nome);
     const enderecoOfuscado = ofuscaEndereco(endereco);
     if (!titularOfuscado || !enderecoOfuscado) {
       return H.send(res, 502, { ok: false, mensagem: 'Não foi possível ler titular e endereço da segunda via.' });
     }
-    return H.send(res, 200, { ok: true, titularOfuscado, enderecoOfuscado });
+    return H.send(res, 200, documentoOfuscado ? { ok: true, titularOfuscado, enderecoOfuscado, documentoOfuscado } : { ok: true, titularOfuscado, enderecoOfuscado });
   } catch (e) {
     return H.fail(res, e);
   }
 };
 
-module.exports._interno = { ofuscaNome, ofuscaEndereco };
+module.exports._interno = { ofuscaNome, ofuscaEndereco, ofuscaDocumento };

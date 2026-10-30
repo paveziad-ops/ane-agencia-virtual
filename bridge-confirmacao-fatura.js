@@ -35,6 +35,7 @@
   info.status.remove();
   if(answer?.ok&&typeof answer.titularOfuscado==='string'&&typeof answer.enderecoOfuscado==='string'){
    info.details.insertBefore(renderValue('Titular',answer.titularOfuscado),info.footer);
+   if(typeof answer.documentoOfuscado==='string'&&answer.documentoOfuscado)info.details.insertBefore(renderValue('CPF/CNPJ',answer.documentoOfuscado),info.footer);
    info.details.insertBefore(renderValue('Endereço',answer.enderecoOfuscado),info.footer);
   }else{
    const message=document.createElement('p');message.className='av-confirmacao-status';
