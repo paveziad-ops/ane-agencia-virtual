@@ -55,7 +55,7 @@ propertiesPage=function(){
  let content=old.properties();const n=locations.length;
  content=content.replace('MINHA CONTA · DEMONSTRAÇÃO','MINHA CONTA · VER SAN')
  .replace('Seus imóveis vinculados aparecerão aqui após a autenticação real do VerSan.','Imóveis vinculados à sua conta, conforme autenticação real no VerSan.')
- .replace('Os três imóveis abaixo são <strong>fictícios</strong> e servem apenas para demonstrar a navegação.','Seus '+n+' imóveis foram identificados diretamente pela API getAutenticacaoPessoa.')
+ .replace('<div class="banner-demo" style="margin-bottom:21px">Os três imóveis abaixo são <strong>fictícios</strong> e servem apenas para demonstrar a navegação.</div>','')
  .replace('Todos (3)','Todos ('+n+')')
  .replace('Ativos (2)','Vinculados ('+n+')')
  .replace('Inativos (1)','Outros (0)');
