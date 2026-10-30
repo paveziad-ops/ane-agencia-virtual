@@ -14,7 +14,7 @@ module.exports=function(req,res){
   ambiente:'homologacao',base:'ANE',origem:'VerSan',
   servidorVerSan:(V.env('VERSAN_BASE_URL')||V.DEFAULT_BASE_URL),
   apis:['cliente','segunda-via-publica','pix-rapido','conferencia-fatura','enviar-fatura-email'],
-  configuracao:{vinculosCdc:has('HOMOLOGATION_VINCULOS'),credenciaisAplicacao:identity,fonteDados:dataSource,sessao,matriculasRestritas:has('HOMOLOGATION_MATRICULAS'),email},
+  configuracao:{credenciaisAplicacao:identity,fonteDados:dataSource,sessao,matriculasRestritas:has('HOMOLOGATION_MATRICULAS'),email},
   consultaRealDisponivel:identity&&dataSource,
   loginDisponivel:identity&&dataSource&&sessao,
   envioEmailDisponivel:email

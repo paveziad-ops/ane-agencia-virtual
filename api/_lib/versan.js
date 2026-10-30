@@ -240,36 +240,9 @@ function matriculasPermitidas() {
   return new Set(raw.split(/[\s,;]+/).map(onlyDigits).filter(Boolean).map(x => String(Number(x))));
 }
 
-/**
- * HOMOLOGATION_VINCULOS: tabela "CDC:idLigacao" separada por vírgula.
- * O CDC (matrícula que o cliente conhece) nem sempre é o id da ligação no VerSan.
- * Sem a tabela, assume-se CDC = idLigacao.
- */
-function vinculos() {
-  const raw = env('HOMOLOGATION_VINCULOS');
-  const porCdc = new Map(), porLigacao = new Map();
-  if (raw) {
-    for (const par of raw.split(/[\s,;]+/)) {
-      const m = par.match(/^\D*(\d+)\s*[:=>-]+\s*(\d+)\D*$/);
-      if (!m) continue;
-      const cdc = String(Number(m[1])), lig = String(Number(m[2]));
-      porCdc.set(cdc, lig); porLigacao.set(lig, cdc);
-    }
-  }
-  return { porCdc, porLigacao };
-}
-
-/** idLigacao do VerSan para um CDC informado pelo cliente. */
-function ligacaoDoCdc(cdc) {
-  const c = String(Number(onlyDigits(cdc)));
-  return vinculos().porCdc.get(c) || c;
-}
-
-/** CDC (matrícula exibida) para um idLigacao retornado pelo VerSan. */
-function cdcDaLigacao(idLigacao) {
-  const l = String(Number(idLigacao));
-  return vinculos().porLigacao.get(l) || l;
-}
+/* O CDC é o próprio idLigacao no VerSan (confirmado em 29/10/2026). Sem tradução. */
+function ligacaoDoCdc(cdc) { return String(Number(onlyDigits(cdc))); }
+function cdcDaLigacao(idLigacao) { return String(Number(idLigacao)); }
 
 function cdcPermitido(cdc) {
   const set = matriculasPermitidas();
