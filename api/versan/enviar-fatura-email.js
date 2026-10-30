@@ -46,7 +46,7 @@ function html(f) {
     '<tr><td style="padding:0 16px 12px;color:#6a849c">Vencimento</td><td style="padding:0 16px 12px;text-align:right;font-weight:700">' + esc(f.vencimento || '—') + '</td></tr>' +
     '<tr><td style="padding:0 16px 12px;color:#6a849c">Valor</td><td style="padding:0 16px 12px;text-align:right;font-weight:700">' + esc(brl(f.valor)) + '</td></tr></table>' +
     '<p style="margin:18px 0 0;font-size:12px;line-height:1.6;color:#6a849c">Antes de pagar, confira beneficiário e valor no aplicativo do seu banco. Se você não fez esta solicitação, ignore esta mensagem.</p>' +
-    '</td></tr><tr><td style="padding:16px 28px;background:#223367;color:#cfe0f2;font-size:11px">Saneamento é saúde · ANE · Mensagem automática, não responda.</td></tr>' +
+    '</td></tr><tr><td style="padding:16px 28px;background:#223367;color:#cfe0f2;font-size:11px">Qualidade de Água e de Vida · ANE · Mensagem automática, não responda.</td></tr>' +
     '</table></td></tr></table></body></html>';
 }
 
