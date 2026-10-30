@@ -28,7 +28,7 @@ function limitar(req, res, nome, max) {
 }
 
 async function debitosPublicos(cdc) {
-  const d = await V.call('getFaturaEmDebito', { idLigacao: Number(cdc) });
+  const d = await V.call('getFaturaEmDebito', { idLigacao: Number(V.ligacaoDoCdc(cdc)) });
   return V.normalizaDebitos(d);
 }
 

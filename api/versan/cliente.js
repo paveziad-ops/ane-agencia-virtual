@@ -45,13 +45,13 @@ function endereco(l) {
 /** Monta a sessão compacta a partir do retorno de getAutenticacaoPessoa. */
 function sessaoDe(auth) {
   const pessoas = (auth.aPessoa || []).filter(p => p && Number(p.id) > 0);
-  const ligacoes = (auth.aLigacao || []).filter(l => l && Number(l.id) > 0 && V.cdcPermitido(l.id));
+  const ligacoes = (auth.aLigacao || []).filter(l => l && Number(l.id) > 0 && V.cdcPermitido(V.cdcDaLigacao(l.id)));
   const p0 = pessoas[0] || {};
   const s = {
     n: String(p0.nome || '').trim().slice(0, 120),
     pe: pessoas.map(p => ({ id: Number(p.id), e: Number(p.idPessoaEmail) || 0 })),
-    im: ligacoes.map(l => ({ c: String(Number(l.id)), p: Number(l.idPessoa) || Number(p0.id) || 0, a: endereco(l), m: l.entregaPorEmail === true, s: situacao(l) })),
-    sel: ligacoes.length ? String(Number(ligacoes[0].id)) : ''
+    im: ligacoes.map(l => ({ c: V.cdcDaLigacao(l.id), l: String(Number(l.id)), p: Number(l.idPessoa) || Number(p0.id) || 0, a: endereco(l), m: l.entregaPorEmail === true, s: situacao(l) })),
+    sel: ligacoes.length ? V.cdcDaLigacao(ligacoes[0].id) : ''
   };
   // Cookie tem limite (~4 KB). Sem espaço, mantém só o essencial.
   if (JSON.stringify(s).length > MAX_COOKIE_JSON) s.im.forEach(i => { i.a = ''; i.s = ''; });
@@ -89,12 +89,12 @@ function idFaturaValido(v) {
 }
 
 async function debitos(i) {
-  const d = await V.call('getFaturaEmDebito', { idLigacao: Number(i.c), idInquilino: i.p });
+  const d = await V.call('getFaturaEmDebito', { idLigacao: Number(i.l || i.c), idInquilino: i.p });
   return V.normalizaDebitos(d);
 }
 
 async function pagas(i, ano) {
-  const d = await V.call('getFaturaPaga', { idLigacao: Number(i.c), ano, idInquilino: i.p });
+  const d = await V.call('getFaturaPaga', { idLigacao: Number(i.l || i.c), ano, idInquilino: i.p });
   return V.normalizaPagas(d);
 }
 
@@ -165,7 +165,7 @@ module.exports = async function (req, res) {
 
       case 'consumo': {
         const i = imovelAtual(s);
-        const d = await V.call('getHistoricoConsumo', { idLigacao: Number(i.c), idInquilino: i.p, ano: anoValido(body.ano) });
+        const d = await V.call('getHistoricoConsumo', { idLigacao: Number(i.l || i.c), idInquilino: i.p, ano: anoValido(body.ano) });
         return H.send(res, 200, { cdc: s.sel, meses: V.normalizaConsumo(d) });
       }
 

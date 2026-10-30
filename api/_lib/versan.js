@@ -240,6 +240,37 @@ function matriculasPermitidas() {
   return new Set(raw.split(/[\s,;]+/).map(onlyDigits).filter(Boolean).map(x => String(Number(x))));
 }
 
+/**
+ * HOMOLOGATION_VINCULOS: tabela "CDC:idLigacao" separada por vírgula.
+ * O CDC (matrícula que o cliente conhece) nem sempre é o id da ligação no VerSan.
+ * Sem a tabela, assume-se CDC = idLigacao.
+ */
+function vinculos() {
+  const raw = env('HOMOLOGATION_VINCULOS');
+  const porCdc = new Map(), porLigacao = new Map();
+  if (raw) {
+    for (const par of raw.split(/[\s,;]+/)) {
+      const m = par.match(/^\D*(\d+)\s*[:=>-]+\s*(\d+)\D*$/);
+      if (!m) continue;
+      const cdc = String(Number(m[1])), lig = String(Number(m[2]));
+      porCdc.set(cdc, lig); porLigacao.set(lig, cdc);
+    }
+  }
+  return { porCdc, porLigacao };
+}
+
+/** idLigacao do VerSan para um CDC informado pelo cliente. */
+function ligacaoDoCdc(cdc) {
+  const c = String(Number(onlyDigits(cdc)));
+  return vinculos().porCdc.get(c) || c;
+}
+
+/** CDC (matrícula exibida) para um idLigacao retornado pelo VerSan. */
+function cdcDaLigacao(idLigacao) {
+  const l = String(Number(idLigacao));
+  return vinculos().porLigacao.get(l) || l;
+}
+
 function cdcPermitido(cdc) {
   const set = matriculasPermitidas();
   return !set || set.has(String(Number(cdc)));
@@ -252,6 +283,6 @@ function configurado() {
 
 module.exports = {
   call, VerSanError, PATHS, onlyDigits, formatDocumento, normalizaDebitos, normalizaPagas, normalizaConsumo,
-  pdfDeBase64, cdcPermitido, matriculasPermitidas, configurado, env, DEFAULT_BASE_URL,
+  pdfDeBase64, cdcPermitido, matriculasPermitidas, ligacaoDoCdc, cdcDaLigacao, configurado, env, DEFAULT_BASE_URL,
   _cache: cache
 };

@@ -11,4 +11,4 @@ http.createServer(async(req,res)=>{
  let p=path.join(ROOT,decodeURIComponent(u.pathname==='/'?'/index.html':u.pathname));
  if(!p.startsWith(ROOT)||!fs.existsSync(p)||fs.statSync(p).isDirectory()){res.statusCode=404;return res.end('nf')}
  res.setHeader('Content-Type',TYPES[path.extname(p)]||'application/octet-stream');fs.createReadStream(p).pipe(res);
-}).listen(8083,()=>console.log('dev :8083'));
+}).listen(Number(process.env.PORT||8083),()=>console.log('dev :'+(process.env.PORT||8083)));
