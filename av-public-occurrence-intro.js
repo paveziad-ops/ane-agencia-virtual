@@ -4,7 +4,6 @@
   if(window[installed])return;
   window[installed]=true;
 
-  const storageKey='ane:av:public-occurrence-intro:v1';
   let dialog=null;
   let originalFocus=null;
   let sessionAccepted=false;
@@ -12,14 +11,14 @@
   let authenticationPending=false;
   let authenticated=false;
 
+  // Aparece a cada abertura/recarga da agência. Depois de fechada, não volta
+  // enquanto a pessoa navega na mesma visita (memória da página, sem storage).
   function wasAcknowledged(){
-    if(sessionAccepted)return true;
-    try{return window.sessionStorage?.getItem(storageKey)==='1'}catch{return false}
+    return sessionAccepted;
   }
 
   function rememberAcknowledgment(){
     sessionAccepted=true;
-    try{window.sessionStorage?.setItem(storageKey,'1')}catch{}
   }
 
   function eligible(){
