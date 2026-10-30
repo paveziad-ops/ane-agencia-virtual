@@ -65,12 +65,14 @@ function regrasPiloto(email) {
 
 function transport() {
   const host = V.env('SMTP_HOST'), from = V.env('EMAIL_FROM');
+  // Remetente sempre com o nome desta agência (o endereço vem da configuração).
+  const endereco = from ? (String(from).match(/<([^>]+)>/) || [, String(from)])[1].trim() : '';
   if (!host || !from) throw new V.VerSanError('Envio de e-mail não configurado (SMTP_HOST / SMTP_FROM).', 503);
   const nodemailer = require('nodemailer');
   const port = Number(V.env('SMTP_PORT')) || 587;
   const user = V.env('SMTP_USER'), pass = V.env('SMTP_PASS');
   return {
-    from,
+    from: endereco ? { name: 'ANE Agência Virtual', address: endereco } : from,
     t: nodemailer.createTransport({
       host, port, secure: V.env('SMTP_SECURE') === 'true' || port === 465,
       auth: user ? { user, pass } : undefined,
