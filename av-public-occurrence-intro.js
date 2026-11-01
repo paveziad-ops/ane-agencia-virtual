@@ -60,7 +60,7 @@
           '<button type="button" class="av-os-primary av-os-intro-report" data-av-os-intro="report">Comunicar ocorrência</button>'+
           '<button type="button" class="av-os-intro-dismiss" data-av-os-intro="dismiss">Agora não</button>'+
         '</div>'+
-        '<p class="av-os-intro-note">A comunicação de ocorrências está em demonstração. Nenhuma ordem de serviço real será aberta nesta versão.</p>'+
+        '<p class="av-os-intro-note">A comunicação de ocorrências ainda não está disponível. Nenhuma ordem de serviço real será aberta nesta versão.</p>'+
       '</section>';
     document.body.appendChild(outer);
     document.body.classList.add('av-os-locked');

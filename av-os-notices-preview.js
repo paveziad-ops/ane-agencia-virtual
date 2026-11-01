@@ -26,7 +26,7 @@
   function showExample(cdc){
     const key=cdcKey(cdc);
     if(closed.has(key))return;
-    const html='<div class="av-os-top"><span class="av-os-eyebrow">AVISO DE SERVIÇO <b>DEMONSTRAÇÃO</b></span><button type="button" data-os-close="example" class="av-os-x" aria-label="Fechar aviso">×</button></div>'+
+    const html='<div class="av-os-top"><span class="av-os-eyebrow">AVISO DE SERVIÇO</span><button type="button" data-os-close="example" class="av-os-x" aria-label="Fechar aviso">×</button></div>'+
       '<div class="av-os-hero-icon" aria-hidden="true">!</div>'+
       '<h2 id="av-os-title">Há um serviço em andamento nas proximidades</h2>'+
       '<p class="av-os-lead">Nossa equipe está realizando uma atividade que pode afetar a sua região.</p>'+
@@ -57,7 +57,7 @@
         '<div class="av-os-fields"><div><label for="av-os-street">Rua ou avenida</label><input id="av-os-street" maxlength="120" autocomplete="street-address" placeholder="Ex.: Rua das Flores"></div><div><label for="av-os-number">Número ou referência</label><input id="av-os-number" maxlength="65" placeholder="Número, esquina ou referência"></div></div>'+
         '<label for="av-os-district">Bairro</label><input id="av-os-district" maxlength="75" placeholder="Informe o bairro">'+
         '<label for="av-os-description">Descrição (opcional)</label><textarea id="av-os-description" rows="2" maxlength="350" placeholder="Descreva o que observou"></textarea>'+
-        '<div class="av-os-disclaimer">Demonstração de interface: ainda não há consulta de OS nem abertura de protocolo nesta prévia. A localização será solicitada somente se você clicar no botão acima.</div>'+
+        '<div class="av-os-disclaimer">Ainda não há consulta de OS nem abertura de protocolo nesta prévia. A localização será solicitada somente se você clicar no botão acima.</div>'+
         '<p class="av-os-help" id="av-os-form-feedback" role="status"></p>'+
         '<button type="submit" class="av-os-primary av-os-submit">Verificar atendimento existente</button>'+
       '</form>';
