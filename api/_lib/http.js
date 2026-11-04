@@ -72,9 +72,20 @@ function guard(req, res) {
   return true;
 }
 
+/**
+ * IP do cliente para os limites de requisição.
+ * Vercel: sobrescreve o X-Forwarded-For, então o 1º endereço é confiável (padrão).
+ * AWS (ALB/CloudFront): o proxy ACRESCENTA ao cabeçalho enviado pelo cliente, então o 1º
+ * endereço pode ser falsificado. Defina TRUST_PROXY_HOPS = nº de proxies confiáveis à frente
+ * (ALB = 1; CloudFront + ALB = 2) para usar o endereço que o proxy de fato viu.
+ */
 function clientIp(req) {
-  const xf = String(req.headers['x-forwarded-for'] || '').split(',')[0].trim();
-  return xf || req.socket?.remoteAddress || 'desconhecido';
+  const partes = String(req.headers['x-forwarded-for'] || '').split(',').map(s => s.trim()).filter(Boolean);
+  const hops = Number(process.env.TRUST_PROXY_HOPS);
+  let ip = '';
+  if (Number.isInteger(hops) && hops > 0) ip = partes.length >= hops ? partes[partes.length - hops] : (partes[0] || '');
+  else ip = partes[0] || '';
+  return ip || req.socket?.remoteAddress || 'desconhecido';
 }
 
 /* Limite em memória por instância (melhor esforço; para produção, usar um store compartilhado). */
