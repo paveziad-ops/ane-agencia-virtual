@@ -29,7 +29,9 @@ const PATHS = {
   getCodigoPixEstatico: '/VerSanIntegracaoServiceV2/IntegracaoServices/getCodigoPixEstatico',
   getSegundaVia: '/VerSanIntegracaoServiceV2/RelatorioServices/getSegundaVia',
   getSegundaViaOfuscada: '/VerSanIntegracaoServiceV2/RelatorioServices/getSegundaViaOfuscada',
-  getServicos: '/VerSanIntegracaoServiceV2/IntegracaoServices/getServicos'
+  getServicos: '/VerSanIntegracaoServiceV2/IntegracaoServices/getServicos',
+  getVerificaEmailExistente: '/VerSanIntegracaoServiceV2/IntegracaoServices/getVerificaEmailExistente',
+  setEmailPessoa: '/VerSanIntegracaoServiceV2/IntegracaoServices/setEmailPessoa'
 };
 
 class VerSanError extends Error {
@@ -245,8 +247,9 @@ function ligacaoDoCdc(cdc) { return String(Number(onlyDigits(cdc))); }
 function cdcDaLigacao(idLigacao) { return String(Number(idLigacao)); }
 
 function cdcPermitido(cdc) {
-  // Restrição por HOMOLOGATION_MATRICULAS desativada (29/10/2026), igual a Andradas:
-  // aceita qualquer CDC da base. Para reativar, volte a usar matriculasPermitidas() aqui.
+  // Restrição por HOMOLOGATION_MATRICULAS desativada a pedido (29/10/2026):
+  // Andradas aceita qualquer CDC da base, como a ANE. A variável continua
+  // salva na Vercel; para reativar, volte a usar matriculasPermitidas() aqui.
   return true;
 }
 

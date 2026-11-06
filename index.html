@@ -71,6 +71,8 @@
 <link rel="stylesheet" href="/brand-oficial.css">
 </head><body>
 <div id="app"></div><div id="toast" role="status" aria-live="polite"></div>
+<script src="/versan-config.js"></script>
+<script src="/versan-direto.js"></script>
 <script defer src="/app.js"></script>
 <script defer src="/bridge-auth.js"></script>
 <script defer src="/bridge-data.js"></script>
@@ -82,6 +84,7 @@
 <script defer src="/bridge-consumption-mixed.js"></script>
 <script defer src="/bridge-invoice-redesign.js"></script>
 <script defer src="/bridge-invoice-payment-fix.js"></script>
+<script defer src="/bridge-email-cadastro.js"></script>
 <script>
 (function(){
 function showLabels(){var root=document.getElementById('app');if(!root)return;root.querySelectorAll('.consumption-bars .bar').forEach(function(bar){var label=(bar.getAttribute('title')||'').split(':').slice(1).join(':').trim();if(label && bar.dataset.value!==label)bar.dataset.value=label;})}

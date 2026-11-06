@@ -11,10 +11,13 @@
 .consumption-bars .bar::before{content:attr(data-value);position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);font-size:clamp(9px,2.7vw,12px);font-weight:800;color:#1d4696;white-space:nowrap;pointer-events:none;line-height:1.15}
 </style></head><body>
 <div id="app"></div><div id="toast" role="status" aria-live="polite"></div>
+<script src="/versan-config.js"></script>
+<script src="/versan-direto.js"></script>
 <script defer src="/app.js"></script>
 <script defer src="/bridge-auth.js"></script>
 <script defer src="/bridge-data.js"></script>
 <script defer src="/bridge-lookup.js"></script>
+<script defer src="/bridge-email-cadastro.js"></script>
 <script>
 (function(){
 function showLabels(){var root=document.getElementById('app');if(!root)return;root.querySelectorAll('.consumption-bars .bar').forEach(function(bar){var label=(bar.getAttribute('title')||'').split(':').slice(1).join(':').trim();if(label && bar.dataset.value!==label)bar.dataset.value=label;})}

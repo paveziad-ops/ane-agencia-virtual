@@ -12,6 +12,8 @@
  *  consumo  {ano}                 -> getHistoricoConsumo
  *  pix | barra | codigoBarras {idFatura} -> getCodigoPixEstatico / getCodigoBarras (somente fatura em débito do imóvel)
  *  pdf      {idFatura}            -> getSegundaVia (PDF binário; somente fatura do imóvel)
+ *  verificarEmail {email}         -> getVerificaEmailExistente; devolve só { existe } (nunca a lista)
+ *  cadastrarEmail {email, origem} -> setEmailPessoa (o VerSan faz todo o cadastro); origem 'entrega' marca o imóvel
  *
  * A senha e o CPF/CNPJ nunca são gravados em log nem na sessão.
  */
@@ -101,6 +103,31 @@ function idFaturaValido(v) {
   const n = Number(v);
   if (!Number.isSafeInteger(n) || n <= 0) throw new V.VerSanError('Fatura inválida.', 400);
   return n;
+}
+
+/* ---- cadastro de e-mail (getVerificaEmailExistente / setEmailPessoa) ----
+ * Contrato informado pela equipe em 06/11/2026: os dois recebem o e-mail e o id.
+ * SUPOSIÇÕES até a documentação sair (ajustar só aqui):
+ *  - o id é o idPessoa da pessoa logada;
+ *  - getVerificaEmailExistente devolve uma lista (vazia = e-mail não existe);
+ *  - setEmailPessoa devolve 200; "codigo" diferente de 0/200 indica erro com "mensagem".
+ */
+const EMAIL_RE = /^[^\s@<>]{1,64}@[^\s@<>]{1,185}\.[a-z]{2,}$/i;
+function emailValido(v) {
+  const e = String(v || '').trim().toLowerCase();
+  if (e.length > 254 || !EMAIL_RE.test(e)) throw new V.VerSanError('Informe um e-mail válido.', 400);
+  return e;
+}
+function paramsEmail(s, email) { return { email, idPessoa: (s.pe[0] && s.pe[0].id) || 0 }; }
+function listaDe(d) {
+  if (Array.isArray(d)) return d;
+  for (const k of ['aEmail', 'aPessoaEmail', 'emails', 'lista', 'resultado', 'dados']) if (d && Array.isArray(d[k])) return d[k];
+  return [];
+}
+function erroDoVerSan(d) {
+  if (d && typeof d.codigo === 'number' && d.codigo !== 0 && d.codigo !== 200) {
+    throw new V.VerSanError((typeof d.mensagem === 'string' && d.mensagem.length < 300 && d.mensagem) || 'O VerSan não concluiu o cadastro do e-mail.', 422);
+  }
 }
 
 async function debitos(i) {
@@ -204,6 +231,25 @@ module.exports = async function (req, res) {
         if (!(await faturaDoImovel(i, idFatura, false))) return H.send(res, 404, { mensagem: 'Fatura não encontrada para este imóvel.' });
         const d = await V.call('getSegundaVia', { idFaturaSegundaVia: idFatura });
         return H.sendPdf(res, V.pdfDeBase64(d), 'fatura-ane-' + idFatura + '.pdf');
+      }
+
+      case 'verificarEmail': {
+        const email = emailValido(body.email);
+        if (!H.rateLimit('email:' + s.pe.map(p => p.id).join('.'), 15, 60 * 60 * 1000)) return H.send(res, 429, { mensagem: 'Muitas tentativas. Aguarde alguns minutos.' });
+        const d = await V.call('getVerificaEmailExistente', paramsEmail(s, email));
+        erroDoVerSan(d);
+        return H.send(res, 200, { existe: listaDe(d).length > 0 });   // a lista nunca sai do servidor
+      }
+
+      case 'cadastrarEmail': {
+        const email = emailValido(body.email);
+        if (!H.rateLimit('emailset:' + s.pe.map(p => p.id).join('.'), 8, 60 * 60 * 1000)) return H.send(res, 429, { mensagem: 'Muitas tentativas. Aguarde alguns minutos.' });
+        const d = await V.call('setEmailPessoa', paramsEmail(s, email));
+        erroDoVerSan(d);
+        s.em = email;
+        if (body.origem === 'entrega') { const i = s.im.find(x => x.c === s.sel); if (i) i.m = true; }
+        H.setSession(req, res, s);
+        return H.send(res, 200, Object.assign({ ok: true }, publico(s)));
       }
 
       default:

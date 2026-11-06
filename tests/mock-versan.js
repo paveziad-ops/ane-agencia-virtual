@@ -29,5 +29,7 @@ http.createServer((req,res)=>{let b='';req.on('data',c=>b+=c);req.on('end',()=>{
   case 'getCodigoPixEstatico': return j(res,200,{codigoPix:'00020126580014BR.GOV.BCB.PIX0136798b3a23-6287-48b3-b882-8ac5e28c6bb9520400005303986540412.05802BR5921AGUAS DO NORDESTE S.A6010SANTA RITA62290525FAT'+body.idFatura+'6304B6B0'});
   case 'getSegundaVia': return j(res,200,{codigo:0,mensagem:PDF,codigo2:0});
   case 'getSegundaViaOfuscada': return j(res,200,{codigo:0,mensagem:PDF_OF,codigo2:0});
+  case 'getVerificaEmailExistente': { calls.push('email:'+body.email+':'+body.idPessoa); return j(res,200, body.email==='existente@exemplo.com'?[{id:77,email:'EXISTENTE@EXEMPLO.COM',idPessoa:99}]:[]); }
+  case 'setEmailPessoa': { calls.push('set:'+body.email+':'+body.idPessoa); return body.email==='recusado@exemplo.com'?j(res,200,{codigo:3,mensagem:'E-mail recusado pelo VerSan.'}):j(res,200,{codigo:0,mensagem:'OK'}); }
   default: return j(res,404,{});
  }})}).listen(9090,()=>console.log('mock VerSan :9090'));
