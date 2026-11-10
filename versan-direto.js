@@ -31,6 +31,8 @@
     getVerificaEmailExistente: SERVICO + '/IntegracaoServices/getVerificaEmailExistente',
     setEmailPessoa: SERVICO + '/IntegracaoServices/setEmailPessoa'
   };
+  // O VerSan exige o nome JNDI completo (ex.: java:comp/env/jdbc/DSVerSanRestore). Completa se vier só o nome.
+  const DATASOURCE = /^java:/i.test(String(CFG.dataSource).trim()) ? String(CFG.dataSource).trim() : 'java:comp/env/jdbc/' + String(CFG.dataSource).trim().replace(/^\/+/, '');
   const TIMEOUT = Number(CFG.timeoutMs) >= 3000 ? Number(CFG.timeoutMs) : 25000;
   const fetchOriginal = window.fetch.bind(window);
 
@@ -62,7 +64,7 @@
 
   const tk = { valor: null, expira: 0, promessa: null };
   async function novoToken() {
-    const d = await rawPost(BASE + PATHS.getAutenticacaoAplicacao, { login: CFG.login, senha: CFG.senha, dataSource: CFG.dataSource });
+    const d = await rawPost(BASE + PATHS.getAutenticacaoAplicacao, { login: CFG.login, senha: CFG.senha, token: '', dataSource: DATASOURCE });
     if (!d || typeof d.token !== 'string' || !d.token) throw new VerSanError('O VerSan não emitiu o token da aplicação.', 502);
     const validade = Number(d.tokenValidade);
     tk.valor = d.token;
@@ -75,7 +77,7 @@
     return tk.promessa;
   }
   async function call(metodo, params) {
-    const body = Object.assign({}, params || {}, { dataSource: CFG.dataSource });
+    const body = Object.assign({}, params || {}, { dataSource: DATASOURCE });
     try { return await rawPost(BASE + PATHS[metodo], body, await token(false)); }
     catch (e) {
       if (e.code !== 401) throw e;

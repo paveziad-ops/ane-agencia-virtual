@@ -89,23 +89,29 @@ async function rawPost(url, body, token) {
   return data;
 }
 
+/** O VerSan exige o nome JNDI completo (ex.: java:comp/env/jdbc/DSVerSanRestore). Completa se vier só o nome. */
+function dataSourceCompleto(v) {
+  const s = String(v || '').trim();
+  return !s || /^java:/i.test(s) ? s : 'java:comp/env/jdbc/' + s.replace(/^\/+/, '');
+}
+
 async function getDataSource() {
   if (cache.dataSource) return cache.dataSource;
   const fixed = env('VERSAN_DATASOURCE');
-  if (fixed) return (cache.dataSource = fixed);
+  if (fixed) return (cache.dataSource = dataSourceCompleto(fixed));
   const secret = env('VERSAN_SECRET');
   if (!secret) throw new VerSanError('Integração VerSan não configurada (VERSAN_DATASOURCE ou VERSAN_SECRET).', 503);
   const url = env('VERSAN_SECRET_URL') || baseUrl() + PATHS.getSecret;
   const d = await rawPost(url, { secret });
   if (!d || typeof d.dataSource !== 'string' || !d.dataSource) throw new VerSanError('getSecret não retornou o dataSource.', 502);
-  return (cache.dataSource = d.dataSource);
+  return (cache.dataSource = dataSourceCompleto(d.dataSource));
 }
 
 async function fetchToken() {
   const login = env('VERSAN_APPLICATION_LOGIN'), senha = env('VERSAN_APPLICATION_PASSWORD');
   if (!login || !senha) throw new VerSanError('Integração VerSan não configurada (credenciais da aplicação).', 503);
   const dataSource = await getDataSource();
-  const d = await rawPost(baseUrl() + PATHS.getAutenticacaoAplicacao, { login, senha, dataSource });
+  const d = await rawPost(baseUrl() + PATHS.getAutenticacaoAplicacao, { login, senha, token: '', dataSource });
   if (!d || typeof d.token !== 'string' || !d.token) throw new VerSanError('O VerSan não emitiu o token da aplicação.', 502);
   const validade = Number(d.tokenValidade);
   const segundos = Number.isFinite(validade) && validade > 0 ? validade : 240;
